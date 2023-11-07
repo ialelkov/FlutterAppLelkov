@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "569897212889",
+    "project_id": "first-app-lelkov",
+    "storage_bucket": "first-app-lelkov.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:569897212889:android:8b8459645685fbd11a97c8",
+        "android_client_info": {
+          "package_name": "com.example.first_app_lelkov"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDp602eA4mpRTJxQuYbGejx7dssmW0QTFs"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
