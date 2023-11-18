@@ -3,6 +3,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:first_app_lelkov/firebase_options.dart';
 import 'package:first_app_lelkov/view/login_view.dart';
 import 'package:first_app_lelkov/view/register_view.dart';
+import 'package:first_app_lelkov/view/verify_email_view.dart';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
@@ -38,13 +39,17 @@ class HomePage extends StatelessWidget {
       builder: (context, snapshot) {
         switch (snapshot.connectionState) {
           case ConnectionState.done:
-            // final user = FirebaseAuth.instance.currentUser;
-            // if (user?.emailVerified ?? false) {
-            //   return const Text('Done');
-            // } else {
-            //   return const VerifyEmaliView();
-            // }
-            return const RegisterView();
+            final user = FirebaseAuth.instance.currentUser;
+            if (user != null) {
+              if (user.emailVerified) {
+                print("Электронная почта проверана");
+              } else {
+                return const VerifyEmaliView();
+              }
+            } else {
+              return const LoginView();
+            }
+            return const Text("Done");
           default:
             return const CircularProgressIndicator();
         }
