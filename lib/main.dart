@@ -36,48 +36,19 @@ class HomePage extends StatelessWidget {
         options: DefaultFirebaseOptions.currentPlatform,
       ),
       builder: (context, snapshot) {
-        // switch (snapshot.connectionState) {
-        //   case ConnectionState.done:
-        //     // final user = FirebaseAuth.instance.currentUser;
-        //     // if (user?.emailVerified ?? false) {
-        //     //   return const Text('Done');
-        //     // } else {
-        //     //   return const VerifyEmaliView();
-        //     // }
-        //     return const RegisterView();
-        //   default:
-        return const CircularProgressIndicator();
-        //}
+        switch (snapshot.connectionState) {
+          case ConnectionState.done:
+            // final user = FirebaseAuth.instance.currentUser;
+            // if (user?.emailVerified ?? false) {
+            //   return const Text('Done');
+            // } else {
+            //   return const VerifyEmaliView();
+            // }
+            return const RegisterView();
+          default:
+            return const CircularProgressIndicator();
+        }
       },
-    );
-  }
-}
-
-class VerifyEmaliView extends StatefulWidget {
-  const VerifyEmaliView({super.key});
-
-  @override
-  State<VerifyEmaliView> createState() => _VerifyEmaliViewState();
-}
-
-class _VerifyEmaliViewState extends State<VerifyEmaliView> {
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text("Проверка эдектронной почты"),
-      ),
-      body: Column(
-        children: [
-          const Text("Пожалуйста верифицируйте свой емайл адрес:"),
-          TextButton(
-              onPressed: () async {
-                final user = FirebaseAuth.instance.currentUser;
-                await user?.sendEmailVerification();
-              },
-              child: const Text("Отправка верификации почты"))
-        ],
-      ),
     );
   }
 }
