@@ -5,6 +5,7 @@ import 'package:first_app_lelkov/view/login_view.dart';
 import 'package:first_app_lelkov/view/register_view.dart';
 
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
@@ -17,6 +18,10 @@ void main() {
         useMaterial3: true,
       ),
       home: const HomePage(),
+      routes: {
+        '/login': (context) => const LoginView(),
+        '/register': (context) => const RegisterView(),
+      },
     ),
   );
 }
@@ -26,29 +31,52 @@ class HomePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    return FutureBuilder(
+      future: Firebase.initializeApp(
+        options: DefaultFirebaseOptions.currentPlatform,
+      ),
+      builder: (context, snapshot) {
+        // switch (snapshot.connectionState) {
+        //   case ConnectionState.done:
+        //     // final user = FirebaseAuth.instance.currentUser;
+        //     // if (user?.emailVerified ?? false) {
+        //     //   return const Text('Done');
+        //     // } else {
+        //     //   return const VerifyEmaliView();
+        //     // }
+        //     return const RegisterView();
+        //   default:
+        return const CircularProgressIndicator();
+        //}
+      },
+    );
+  }
+}
+
+class VerifyEmaliView extends StatefulWidget {
+  const VerifyEmaliView({super.key});
+
+  @override
+  State<VerifyEmaliView> createState() => _VerifyEmaliViewState();
+}
+
+class _VerifyEmaliViewState extends State<VerifyEmaliView> {
+  @override
+  Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text("Home"),
-        centerTitle: true,
-        backgroundColor: const Color.fromARGB(255, 211, 21, 7),
+        title: const Text("Проверка эдектронной почты"),
       ),
-      body: FutureBuilder(
-        future: Firebase.initializeApp(
-          options: DefaultFirebaseOptions.currentPlatform,
-        ),
-        builder: (context, snapshot) {
-          switch (snapshot.connectionState) {
-            case ConnectionState.done:
-              final user = FirebaseAuth.instance.currentUser;
-              if (user?.emailVerified ?? false)
-                print("Верифицирован");
-              else
-                print("нужна верификация");
-              return const Text('Done');
-            default:
-              return const Text("Загрузка...");
-          }
-        },
+      body: Column(
+        children: [
+          const Text("Пожалуйста верифицируйте свой емайл адрес:"),
+          TextButton(
+              onPressed: () async {
+                final user = FirebaseAuth.instance.currentUser;
+                await user?.sendEmailVerification();
+              },
+              child: const Text("Отправка верификации почты"))
+        ],
       ),
     );
   }

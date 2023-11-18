@@ -1,6 +1,4 @@
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_core/firebase_core.dart';
-import 'package:first_app_lelkov/firebase_options.dart';
 import 'package:flutter/material.dart';
 
 class RegisterView extends StatefulWidget {
@@ -31,68 +29,58 @@ class _RegisterViewState extends State<RegisterView> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text("Регистрация"),
-        centerTitle: true,
-        backgroundColor: const Color.fromARGB(255, 211, 21, 7),
-      ),
-      body: FutureBuilder(
-        future: Firebase.initializeApp(
-          options: DefaultFirebaseOptions.currentPlatform,
-        ),
-        builder: (context, snapshot) {
-          switch (snapshot.connectionState) {
-            case ConnectionState.done:
-              return Column(
-                children: [
-                  TextField(
-                    controller: _email,
-                    enableSuggestions: false,
-                    autocorrect: false,
-                    keyboardType: TextInputType.emailAddress,
-                    decoration: InputDecoration(
-                      hintText: "Введите почту",
-                    ),
-                  ),
-                  TextField(
-                    controller: _password,
-                    obscureText: true,
-                    enableSuggestions: false,
-                    autocorrect: false,
-                    decoration: InputDecoration(
-                      hintText: "Введите пароль",
-                    ),
-                  ),
-                  TextButton(
-                    onPressed: () async {
-                      final email = _email.text;
-                      final password = _password.text;
-                      try {
-                        final UserCredential = await FirebaseAuth.instance
-                            .createUserWithEmailAndPassword(
-                                email: email, password: password);
-                        print(UserCredential);
-                      } on FirebaseAuthException catch (e) {
-                        if (e.code == "weak-password") {
-                          print("Слабый пароль");
-                        } else if (e.code == "invalid-email") {
-                          print("введен не корректный адрес электронной почты");
-                        } else if (e.code == "email-already-in-use") {
-                          print("Почта уже зарегестрирована");
-                        } else {
-                          print(e.code);
-                        }
-                      }
-                    },
-                    child: const Text("Зарегестрироваться"),
-                  ),
-                ],
-              );
-
-            default:
-              return const Text("Загрузка...");
-          }
-        },
+      appBar: AppBar(title: const Text("Регистрация")),
+      body: Column(
+        children: [
+          TextField(
+            controller: _email,
+            enableSuggestions: false,
+            autocorrect: false,
+            keyboardType: TextInputType.emailAddress,
+            decoration: const InputDecoration(
+              hintText: "Введите почту",
+            ),
+          ),
+          TextField(
+            controller: _password,
+            obscureText: true,
+            enableSuggestions: false,
+            autocorrect: false,
+            decoration: const InputDecoration(
+              hintText: "Введите пароль",
+            ),
+          ),
+          TextButton(
+            onPressed: () async {
+              final email = _email.text;
+              final password = _password.text;
+              try {
+                final UserCredential = await FirebaseAuth.instance
+                    .createUserWithEmailAndPassword(
+                        email: email, password: password);
+                print(UserCredential);
+              } on FirebaseAuthException catch (e) {
+                if (e.code == "weak-password") {
+                  print("Слабый пароль");
+                } else if (e.code == "invalid-email") {
+                  print("введен не корректный адрес электронной почты");
+                } else if (e.code == "email-already-in-use") {
+                  print("Почта уже зарегестрирована");
+                } else {
+                  print(e.code);
+                }
+              }
+            },
+            child: const Text("Зарегестрироваться"),
+          ),
+          TextButton(
+            onPressed: () {
+              Navigator.of(context)
+                  .pushNamedAndRemoveUntil('/login/', (route) => false);
+            },
+            child: const Text("Авторизяция"),
+          )
+        ],
       ),
     );
   }
