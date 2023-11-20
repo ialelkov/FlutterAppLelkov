@@ -1,5 +1,8 @@
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:first_app_lelkov/constants/routes.dart';
 import 'package:flutter/material.dart';
+
+import 'dart:developer' as devtools show log;
 
 class RegisterView extends StatefulWidget {
   const RegisterView({super.key});
@@ -55,19 +58,21 @@ class _RegisterViewState extends State<RegisterView> {
               final email = _email.text;
               final password = _password.text;
               try {
-                final UserCredential = await FirebaseAuth.instance
-                    .createUserWithEmailAndPassword(
-                        email: email, password: password);
-                print(UserCredential);
+                final userCredential =
+                    await FirebaseAuth.instance.createUserWithEmailAndPassword(
+                  email: email,
+                  password: password,
+                );
+                devtools.log(userCredential.toString());
               } on FirebaseAuthException catch (e) {
                 if (e.code == "weak-password") {
-                  print("Слабый пароль");
+                  devtools.log("Слабый пароль");
                 } else if (e.code == "invalid-email") {
-                  print("введен не корректный адрес электронной почты");
+                  devtools.log("введен не корректный адрес электронной почты");
                 } else if (e.code == "email-already-in-use") {
-                  print("Почта уже зарегестрирована");
+                  devtools.log("Почта уже зарегестрирована");
                 } else {
-                  print(e.code);
+                  devtools.log(e.code);
                 }
               }
             },
@@ -76,7 +81,7 @@ class _RegisterViewState extends State<RegisterView> {
           TextButton(
             onPressed: () {
               Navigator.of(context)
-                  .pushNamedAndRemoveUntil('/login/', (route) => false);
+                  .pushNamedAndRemoveUntil(loginRoute, (route) => false);
             },
             child: const Text("Авторизяция"),
           )
