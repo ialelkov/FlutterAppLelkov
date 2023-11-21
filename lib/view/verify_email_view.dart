@@ -1,4 +1,5 @@
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:first_app_lelkov/constants/routes.dart';
 import 'package:flutter/material.dart';
 
 class VerifyEmaliView extends StatefulWidget {
@@ -17,13 +18,26 @@ class _VerifyEmaliViewState extends State<VerifyEmaliView> {
       ),
       body: Column(
         children: [
-          const Text("Пожалуйста верифицируйте свой емайл адрес:"),
+          const Text(
+              "Письмо верификации отправленно, пожалуйста, откройте его"),
+          const Text("Если вы не получили письмо, нажмите на кнопку ниже"),
           TextButton(
-              onPressed: () async {
-                final user = FirebaseAuth.instance.currentUser;
-                await user?.sendEmailVerification();
-              },
-              child: const Text("Отправка верификации почты"))
+            onPressed: () async {
+              final user = FirebaseAuth.instance.currentUser;
+              await user?.sendEmailVerification();
+            },
+            child: const Text("Отправка верификации почты"),
+          ),
+          TextButton(
+            onPressed: () async {
+              await FirebaseAuth.instance.signOut();
+              Navigator.of(context).pushNamedAndRemoveUntil(
+                registerRoute,
+                (route) => false,
+              );
+            },
+            child: const Text("Restart"),
+          ),
         ],
       ),
     );
