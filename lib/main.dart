@@ -1,7 +1,8 @@
 import 'package:first_app_lelkov/constants/routes.dart';
 import 'package:first_app_lelkov/services/auth/auth_service.dart';
 import 'package:first_app_lelkov/view/login_view.dart';
-import 'package:first_app_lelkov/view/notes_view.dart';
+import 'package:first_app_lelkov/view/notes/new_note_view.dart';
+import 'package:first_app_lelkov/view/notes/notes_view.dart';
 import 'package:first_app_lelkov/view/register_view.dart';
 import 'package:first_app_lelkov/view/verify_email_view.dart';
 
@@ -23,6 +24,7 @@ void main() {
         registerRoute: (context) => const RegisterView(),
         notesRoute: (context) => const NotesView(),
         verifyEmailRoute: (context) => const VerifyEmaliView(),
+        newNoteRoute: (context) => const NewNoteView(),
       },
     ),
   );
