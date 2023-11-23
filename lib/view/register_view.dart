@@ -1,7 +1,7 @@
 import 'package:first_app_lelkov/constants/routes.dart';
 import 'package:first_app_lelkov/services/auth/auth_exceptions.dart';
 import 'package:first_app_lelkov/services/auth/auth_service.dart';
-import 'package:first_app_lelkov/utilites/show_error_dialog.dart';
+import 'package:first_app_lelkov/utilites/dialogs/error_dialog.dart';
 import 'package:flutter/material.dart';
 
 class RegisterView extends StatefulWidget {
