@@ -8,8 +8,8 @@
       "args": [],
       "stopAtEntry": false,
       "externalConsole": true,
-      "cwd": "d:/Fin/Flutter/first_app_lelkov/windows/runner",
-      "program": "d:/Fin/Flutter/first_app_lelkov/windows/runner/build/Debug/outDebug",
+      "cwd": "d:/Fin/Flutter/first_app_lelkov/windows/flutter",
+      "program": "d:/Fin/Flutter/first_app_lelkov/windows/flutter/build/Debug/outDebug",
       "MIMode": "gdb",
       "miDebuggerPath": "gdb",
       "setupCommands": [
