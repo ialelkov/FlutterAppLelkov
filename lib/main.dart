@@ -4,6 +4,7 @@ import 'package:first_app_lelkov/services/auth/bloc/auth_bloc.dart';
 import 'package:first_app_lelkov/services/auth/bloc/auth_event.dart';
 import 'package:first_app_lelkov/services/auth/bloc/auth_state.dart';
 import 'package:first_app_lelkov/services/auth/firebase_auth_provider.dart';
+import 'package:first_app_lelkov/view/forgot_password_view.dart';
 import 'package:first_app_lelkov/view/login_view.dart';
 import 'package:first_app_lelkov/view/notes/create_update_note_view.dart';
 import 'package:first_app_lelkov/view/notes/notes_view.dart';
@@ -56,6 +57,8 @@ class HomePage extends StatelessWidget {
         return const VerifyEmaliView();
       } else if (state is AuthStateLoggedOut) {
         return const LoginView();
+      } else if (state is AuthStateForgotPassword) {
+        return const ForgotPasswordview();
       } else if (state is AuthStateRegistering) {
         return const RegisterView();
       } else {

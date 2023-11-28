@@ -6,6 +6,46 @@ import 'package:first_app_lelkov/services/auth/bloc/auth_state.dart';
 class AuthBloc extends Bloc<AuthEvent, AuthState> {
   AuthBloc(AuthProvider provider)
       : super(const AuthStateUninitialized(isLoading: true)) {
+    //registering
+    on<AuthEventShouldRegister>((event, emit) {
+      emit(const AuthStateRegistering(
+        exception: null,
+        isLoading: false,
+      ));
+    });
+    //forgot password
+    on<AuthEventForgotPassword>((event, emit) async {
+      emit(const AuthStateForgotPassword(
+        exception: null,
+        hasSentEmail: false,
+        isLoading: false,
+      ));
+      final email = event.email;
+      if (email == null) {
+        return;
+      } else {
+        emit(const AuthStateForgotPassword(
+          exception: null,
+          hasSentEmail: false,
+          isLoading: true,
+        ));
+      }
+      bool didSendEmail;
+      Exception? exeption;
+      try {
+        await provider.sendPasswordReset(toEmail: email);
+        didSendEmail = true;
+        exeption = null;
+      } on Exception catch (e) {
+        didSendEmail = false;
+        exeption = e;
+      }
+      emit(AuthStateForgotPassword(
+        exception: exeption,
+        hasSentEmail: didSendEmail,
+        isLoading: false,
+      ));
+    });
     // send email verification
     on<AuthEventSentEmailVerification>((event, emit) async {
       await provider.sendEmailVerification();
